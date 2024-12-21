@@ -8,17 +8,17 @@ export class ProductsService {
   constructor(@InjectModel("Product") private productModel: Model<ProductDocument>) { }
 
 
-  create(product: Product) {
+  async create(product: Product) {
     const createdProduct = new this.productModel(product);
-    return createdProduct.save();
+    return await createdProduct.save();
   }
 
-  findAll() {
-    return `This action returns all products`;
+  async findAll() {
+    return await this.productModel.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  async findOne(id: string) {
+    return await this.productModel.findById(id).exec();
   }
 
   // update(id: number, updateProductDto: UpdateProductDto) {
