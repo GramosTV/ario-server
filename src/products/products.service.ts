@@ -17,8 +17,8 @@ export class ProductsService {
     return await this.productModel.find().exec();
   }
 
-  async findOne(id: string) {
-    return await this.productModel.findById(id).exec();
+  async findOne(uuid: string) {
+    return await this.productModel.findOne({ id: uuid }).exec();
   }
 
   // update(id: number, updateProductDto: UpdateProductDto) {

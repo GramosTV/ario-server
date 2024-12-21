@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { Timeframe } from 'src/types';
+import { Game, GameSchema } from 'src/games/schemas/game.schema';
+import { Status, Timeframe } from 'src/types';
 import { v4 as uuidv4 } from 'uuid';
 @Schema()
 export class Price {
@@ -18,8 +19,8 @@ export class Product extends Document {
     @Prop({ default: uuidv4 })
     id: string;
 
-    @Prop({ required: true })
-    game: string;
+    @Prop({ type: GameSchema, required: true })
+    game: Game;
 
     @Prop({ required: true })
     name: string;
@@ -35,7 +36,12 @@ export class Product extends Document {
 
     @Prop({ required: true })
     images: string[];
+
+    @Prop({ required: true, enum: Status })
+    status: Status;
 }
+
+
 
 
 export const ProductSchema = SchemaFactory.createForClass(Product);

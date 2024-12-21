@@ -6,3 +6,10 @@ export enum Timeframe {
     year = "Year",
     lifetime = "Lifetime",
 }
+export enum Status {
+    Undetected = "Undetected",
+    Updating = "Updating",
+    Soon = "Soon",
+    Testing = "Testing",
+    Down = "Down",
+}
