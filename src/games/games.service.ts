@@ -11,8 +11,8 @@ export class GamesService {
     return await createdProduct.save();
   }
 
-  findAll() {
-    return `This action returns all games`;
+  async findAll(): Promise<Game[]> {
+    return await this.productModel.find().exec();
   }
 
   async findOne(id: string): Promise<Game> {
@@ -23,7 +23,7 @@ export class GamesService {
   //   return `This action updates a #${id} game`;
   // }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} game`;
   }
 }

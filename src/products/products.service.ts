@@ -17,15 +17,15 @@ export class ProductsService {
     return await this.productModel.find().exec();
   }
 
-  async findOne(uuid: string) {
-    return await this.productModel.findOne({ id: uuid }).exec();
+  async findOne(id: string) {
+    return await this.productModel.findOne({ id }).exec();
   }
 
-  // update(id: number, updateProductDto: UpdateProductDto) {
-  //   return `This action updates a #${id} product`;
-  // }
+  async update(id: string, product: Product) {
+    return await this.productModel.findOneAndUpdate({ id }, product, { new: true }).exec();
+  }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async remove(id: string) {
+    return await this.productModel.findOneAndDelete({ id }).exec();
   }
 }

@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { GamesService } from './games.service';
 import { Game } from './schemas/game.schema';
+import { unformatGameName } from 'src/utils/unformat';
 
 @Controller('games')
 export class GamesController {
@@ -8,12 +9,13 @@ export class GamesController {
 
   @Post()
   async create(@Body() game: Game) {
+    game.game = unformatGameName(game.game)
     return await this.gamesService.create(game);
   }
 
   @Get()
-  findAll() {
-    return this.gamesService.findAll();
+  async findAll() {
+    return await this.gamesService.findAll();
   }
 
   @Get(':id')
@@ -28,6 +30,6 @@ export class GamesController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.gamesService.remove(+id);
+    return this.gamesService.remove(id);
   }
 }

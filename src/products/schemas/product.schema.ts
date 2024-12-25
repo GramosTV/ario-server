@@ -39,6 +39,15 @@ export class Product extends Document {
 
     @Prop({ required: true, enum: Status })
     status: Status;
+
+    @Prop({ required: true })
+    description: string;
+
+    @Prop({ required: true })
+    video: string;
+
+    @Prop({ required: true })
+    spoofer: boolean;
 }
 
 
