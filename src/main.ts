@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as fs from 'fs';
-
+import * as cookieParser from 'cookie-parser';
 async function bootstrap() {
   const httpsOptions = {
     key: fs.readFileSync('/etc/letsencrypt/live/kochamcie.duckdns.org/privkey.pem'),
@@ -10,6 +10,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     httpsOptions,
   });
+  app.use(cookieParser());
   app.enableCors({
     origin: '*',
     credentials: true,
