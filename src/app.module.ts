@@ -13,9 +13,6 @@ import { AuthGuard } from './auth/auth.guard';
 @Module({
   imports: [MongooseModule.forRoot('mongodb+srv://ario:ASGek95vYA9LRGvC@ario.upcth.mongodb.net/?retryWrites=true&w=majority&appName=ario'), ProductsModule, ConfigModule.forRoot(), GamesModule, AuthModule],
   controllers: [AppController],
-  providers: [AppService, AuthService, {
-    provide: APP_GUARD,
-    useClass: AuthGuard,
-  }],
+  providers: [AppService, AuthService],
 })
 export class AppModule { }
