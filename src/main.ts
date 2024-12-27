@@ -3,10 +3,13 @@ import { AppModule } from './app.module';
 import * as fs from 'fs';
 import * as cookieParser from 'cookie-parser';
 async function bootstrap() {
-  const httpsOptions = {
-    key: fs.readFileSync('/etc/letsencrypt/live/kochamcie.duckdns.org/privkey.pem'),
-    cert: fs.readFileSync('/etc/letsencrypt/live/kochamcie.duckdns.org/fullchain.pem'),
-  };
+  let httpsOptions;
+  if (process.env.DEV !== '1') {
+    httpsOptions = {
+      key: fs.readFileSync('/etc/letsencrypt/live/kochamcie.duckdns.org/privkey.pem'),
+      cert: fs.readFileSync('/etc/letsencrypt/live/kochamcie.duckdns.org/fullchain.pem'),
+    };
+  }
   const app = await NestFactory.create(AppModule, {
     httpsOptions,
   });

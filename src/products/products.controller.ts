@@ -1,13 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFiles } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFiles, UseGuards } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { Product } from './schemas/product.schema';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { Game } from 'src/games/schemas/game.schema';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) { }
 
+  @UseGuards(AuthGuard)
   @Post()
   @UseInterceptors(
     FileFieldsInterceptor([
@@ -60,6 +62,7 @@ export class ProductsController {
     return await this.productsService.findOne(id);
   }
 
+  @UseGuards(AuthGuard)
   @Patch(':id')
   @UseInterceptors(
     FileFieldsInterceptor([
@@ -104,6 +107,7 @@ export class ProductsController {
     return await this.productsService.update(id, productWithFiles);
   }
 
+  @UseGuards(AuthGuard)
   @Delete(':id')
   async remove(@Param('id') id: string) {
     return await this.productsService.remove(id);
