@@ -3,10 +3,12 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Product, ProductDocument } from './schemas/product.schema';
 import * as sharp from 'sharp';
+import { GamesService } from 'src/games/games.service';
+import { formatGameName, unformatGameName } from 'src/utils/unformat';
 
 @Injectable()
 export class ProductsService {
-  constructor(@InjectModel("Product") private productModel: Model<ProductDocument>) { }
+  constructor(@InjectModel("Product") private productModel: Model<ProductDocument>, private readonly gamesService: GamesService,) { }
 
 
   async create(product: Product) {
@@ -34,6 +36,10 @@ export class ProductsService {
 
   async findOne(id: string) {
     return await this.productModel.findOne({ id }).exec();
+  }
+
+  async findOneByName(game: string, name: string) {
+    return await this.productModel.findOne({ name: formatGameName(name), 'game.game': game}).exec();
   }
 
   async update(id: string, product: Product) {

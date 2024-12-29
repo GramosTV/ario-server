@@ -19,6 +19,10 @@ export class GamesService {
     return await this.productModel.findOne({ uuid: id }).exec();
   }
 
+  async findOneByName(name: string): Promise<Game> {
+    return await this.productModel.findOne({ game: name }).exec();
+  }
+
   // update(id: number, updateGameDto: UpdateGameDto) {
   //   return `This action updates a #${id} game`;
   // }
