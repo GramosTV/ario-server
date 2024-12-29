@@ -15,7 +15,7 @@ async function bootstrap() {
   });
   app.use(cookieParser());
   app.enableCors({
-    origin: 'https://www.harmancheats.com',
+    origin: process.env.ORIGIN ?? 'https://www.harmancheats.com',
     credentials: true,
   });
   await app.listen(process.env.PORT ?? 3000);
