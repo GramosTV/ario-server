@@ -41,13 +41,11 @@ export class ProductsController {
     const thumbnailBase64 = files.thumbnail?.[0] ? convertToBase64(files.thumbnail[0]) : undefined;
     const imagesBase64 = files.images?.map((file) => convertToBase64(file));
 
-    // Merge product with base64 encoded images
     const productWithFiles = {
       ...product,
       thumbnail: thumbnailBase64,
       images: imagesBase64,
     };
-    console.log(productWithFiles)
 
     return await this.productsService.create(productWithFiles);
   }
@@ -110,6 +108,7 @@ export class ProductsController {
   @UseGuards(AuthGuard)
   @Delete(':id')
   async remove(@Param('id') id: string) {
+    console.log('delete')
     return await this.productsService.remove(id);
   }
 }

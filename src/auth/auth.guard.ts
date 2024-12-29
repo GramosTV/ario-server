@@ -8,7 +8,6 @@ export class AuthGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
     const request: Request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromCookie(request);
-
     if (!token || token !== this.validToken) {
       throw new UnauthorizedException('Invalid auth token');
     }
