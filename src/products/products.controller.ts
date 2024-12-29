@@ -57,12 +57,12 @@ export class ProductsController {
     return await this.productsService.findAll();
   }
 
-  // @Get('/:id')
-  // async findOne(@Param('id') id: string) {
-  //   return await this.productsService.findOne(id);
-  // }
+  @Get('/:id')
+  async findOne(@Param('id') id: string) {
+    return await this.productsService.findOne(id);
+  }
 
-  @Get('/:game/:name')
+  @Get('/findByName/:game/:name')
   async findOneByName(@Param('game') game: string, @Param('name') name: string) {
     return await this.productsService.findOneByName(game,name);
   }
