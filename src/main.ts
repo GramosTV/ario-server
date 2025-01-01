@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as fs from 'fs';
 import * as cookieParser from 'cookie-parser';
+import { json, urlencoded } from 'express';
 async function bootstrap() {
   let httpsOptions;
   if (process.env.DEV !== '1') {
@@ -13,6 +14,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     httpsOptions,
   });
+  app.use(json({ limit: '200mb' }));
+  app.use(urlencoded({ limit: '200mb', extended: true }));
   app.use(cookieParser());
   app.enableCors({
     origin: process.env.ORIGIN ?? 'https://www.harmancheats.com',

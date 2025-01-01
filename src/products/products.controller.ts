@@ -57,6 +57,16 @@ export class ProductsController {
     return await this.productsService.findAll();
   }
 
+  @Get('/no-img')
+  async findAllNoImg() {
+    return await this.productsService.findAllNoImg();
+  }
+
+  @Get('/no-thumbnail-and-img')
+  async findAllNoThumbnailAndImg() {
+    return await this.productsService.findAllNoThumbnailAndImg();
+  }
+
   @Get('/:id')
   async findOne(@Param('id') id: string) {
     return await this.productsService.findOne(id);

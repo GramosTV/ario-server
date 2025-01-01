@@ -31,7 +31,16 @@ export class ProductsService {
   }
 
   async findAll() {
-    return await this.productModel.find().exec();
+    const res = await this.productModel.find().exec();
+    return res;
+  }
+
+  async findAllNoImg() {
+    return await this.productModel.find({}, { images: 0 }).exec();
+  }
+
+  async findAllNoThumbnailAndImg() {
+    return await this.productModel.find({}, { thumbnail: 0, images: 0}).exec();
   }
 
   async findOne(id: string) {
