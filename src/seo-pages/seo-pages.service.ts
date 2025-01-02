@@ -7,12 +7,18 @@ import { InjectModel } from '@nestjs/mongoose';
 export class SeoPagesService {
   constructor(@InjectModel("SeoPage") private seoPageModel: Model<SeoPageDocument>) { }
   async create(seoPage: SeoPage) {
+    const pages = await this.findAll();
+    const index = pages.findIndex(page => page.game.game === seoPage.game.game)
+    if (index > -1) {
+      await this.seoPageModel.deleteOne({ id: pages[index].id }).exec();
+    }
     const createdProduct = new this.seoPageModel(seoPage);
     return await createdProduct.save();
   }
 
-  findAll() {
-    return `This action returns all seoPages`;
+  async findAll() {
+    const res = await this.seoPageModel.find().exec();
+    return res;
   }
 
   findOne(id: number) {

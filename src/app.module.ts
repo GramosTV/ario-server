@@ -20,5 +20,7 @@ import { SeoPagesModule } from './seo-pages/seo-pages.module';
 export class AppModule { }
 
 
+// imports: [MongooseModule.forRoot(`mongodb://127.0.0.1:27017/test?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.3.7`), 
+
 // imports: [MongooseModule.forRoot('mongodb+srv://ario:ASGek95vYA9LRGvC@ario.upcth.mongodb.net/?retryWrites=true&w=majority&appName=ario'), ProductsModule, ConfigModule.forRoot(), GamesModule, AuthModule, ScheduleModule.forRoot()],
 
