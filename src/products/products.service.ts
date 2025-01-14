@@ -8,15 +8,17 @@ import { formatGameName, unformatGameName } from 'src/utils/unformat';
 
 @Injectable()
 export class ProductsService {
-  constructor(@InjectModel("Product") private productModel: Model<ProductDocument>, private readonly gamesService: GamesService,) { }
-
+  constructor(
+    @InjectModel('Product') private productModel: Model<ProductDocument>,
+    private readonly gamesService: GamesService,
+  ) {}
 
   async create(product: Product) {
     if (product.thumbnail) {
       product.thumbnail = await this.compressImage(product.thumbnail);
     }
     if (product.images && product.images.length > 0) {
-      product.images = await Promise.all(product.images.map(image => this.compressImage(image)));
+      product.images = await Promise.all(product.images.map((image) => this.compressImage(image)));
     }
     const createdProduct = new this.productModel(product);
     return await createdProduct.save();
@@ -40,7 +42,7 @@ export class ProductsService {
   }
 
   async findAllNoThumbnailAndImg() {
-    return await this.productModel.find({}, { thumbnail: 0, images: 0}).exec();
+    return await this.productModel.find({}, { thumbnail: 0, images: 0 }).exec();
   }
 
   async findOne(id: string) {
@@ -48,7 +50,10 @@ export class ProductsService {
   }
 
   async findOneByName(game: string, name: string) {
-    return await this.productModel.findOne({ name: formatGameName(name), 'game.game': game}).exec();
+    console.log(game, formatGameName(name));
+    return await this.productModel
+      .findOne({ name: { $regex: new RegExp(formatGameName(name), 'i') }, 'game.game': game })
+      .exec();
   }
 
   async update(id: string, product: Product) {
@@ -56,7 +61,7 @@ export class ProductsService {
       product.thumbnail = await this.compressImage(product.thumbnail);
     }
     if (product.images && product.images.length > 0) {
-      product.images = await Promise.all(product.images.map(image => this.compressImage(image)));
+      product.images = await Promise.all(product.images.map((image) => this.compressImage(image)));
     }
     return await this.productModel.findOneAndUpdate({ id }, product, { new: true }).exec();
   }
