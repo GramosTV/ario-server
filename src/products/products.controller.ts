@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFiles, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseInterceptors,
+  UploadedFiles,
+  UseGuards,
+} from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { Product } from './schemas/product.schema';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
@@ -7,9 +18,7 @@ import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('products')
 export class ProductsController {
-  constructor(
-    private readonly productsService: ProductsService,
-  ) { }
+  constructor(private readonly productsService: ProductsService) {}
 
   @UseGuards(AuthGuard)
   @Post()
@@ -27,14 +36,14 @@ export class ProductsController {
     },
     @Body() product: Omit<Product, 'thumbnail' | 'images'>,
   ) {
-    console.log('yeah!!')
+    console.log('yeah!!');
     const prices = typeof product.prices === 'string' ? JSON.parse(product.prices) : product.prices;
     product.prices = prices;
 
     const game = typeof product.game === 'string' ? JSON.parse(product.game) : product.game;
     product.game = game;
 
-    product.spoofer = Boolean(product.spoofer)
+    product.spoofer = Boolean(product.spoofer);
 
     const convertToBase64 = (file: Express.Multer.File) => {
       return file.buffer.toString('base64');
@@ -74,7 +83,7 @@ export class ProductsController {
 
   @Get('/findByName/:game/:name')
   async findOneByName(@Param('game') game: string, @Param('name') name: string) {
-    return await this.productsService.findOneByName(game,name);
+    return await this.productsService.findOneByName(game, name);
   }
 
   @UseGuards(AuthGuard)
@@ -94,14 +103,14 @@ export class ProductsController {
     @Param('id') id: string,
     @Body() product: Omit<Product, 'thumbnail' | 'images'>,
   ) {
-    console.log('yeah!!')
+    console.log('yeah!!');
     const prices = typeof product.prices === 'string' ? JSON.parse(product.prices) : product.prices;
     product.prices = prices;
 
     const game = typeof product.game === 'string' ? JSON.parse(product.game) : product.game;
     product.game = game;
 
-    product.spoofer = Boolean(product.spoofer)
+    product.spoofer = Boolean(product.spoofer);
 
     const convertToBase64 = (file: Express.Multer.File) => {
       return file.buffer.toString('base64');
@@ -116,7 +125,7 @@ export class ProductsController {
       thumbnail: thumbnailBase64,
       images: imagesBase64,
     };
-    console.log(productWithFiles)
+    console.log(productWithFiles);
     // delete productWithFiles.thumbnail;
     // delete productWithFiles.images;
     return await this.productsService.update(id, productWithFiles);
@@ -125,7 +134,7 @@ export class ProductsController {
   @UseGuards(AuthGuard)
   @Delete(':id')
   async remove(@Param('id') id: string) {
-    console.log('delete')
+    console.log('delete');
     return await this.productsService.remove(id);
   }
 }
