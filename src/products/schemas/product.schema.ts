@@ -25,6 +25,9 @@ export class Product extends Document {
   @Prop({ required: true })
   name: string;
 
+  @Prop({ required: true })
+  displayName: string;
+
   @Prop({ type: [PriceSchema], required: true })
   prices: Price[];
 
