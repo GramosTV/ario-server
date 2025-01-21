@@ -42,8 +42,8 @@ export class ProductsController {
 
     const game = typeof product.game === 'string' ? JSON.parse(product.game) : product.game;
     product.game = game;
-
-    product.spoofer = Boolean(product.spoofer);
+    
+    product.spoofer = (product.spoofer as any) === "true";
 
     const convertToBase64 = (file: Express.Multer.File) => {
       return file.buffer.toString('base64');
@@ -110,7 +110,7 @@ export class ProductsController {
     const game = typeof product.game === 'string' ? JSON.parse(product.game) : product.game;
     product.game = game;
 
-    product.spoofer = Boolean(product.spoofer);
+    product.spoofer = (product.spoofer as any) === "true";
 
     const convertToBase64 = (file: Express.Multer.File) => {
       return file.buffer.toString('base64');
