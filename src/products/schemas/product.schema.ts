@@ -1,4 +1,4 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'; 
 import { Document } from 'mongoose';
 import { Game, GameSchema } from 'src/games/schemas/game.schema';
 import { Status, Timeframe } from 'src/types';
@@ -51,6 +51,12 @@ export class Product extends Document {
 
   @Prop()
   descriptionRu?: string;
+
+  @Prop()
+  seoTitle?: string;
+
+  @Prop()
+  seoDescription?: string;
 
   @Prop()
   video?: string;
