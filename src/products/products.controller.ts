@@ -70,7 +70,7 @@ export class ProductsController {
   @Get('/all')
   async findAlll() {
     const products = await this.productsService.findAll();
-    return products.filter((product) => !product.hidden);
+    return products;
   }
 
   @Get('/no-img')
