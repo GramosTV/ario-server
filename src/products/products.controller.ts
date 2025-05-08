@@ -42,8 +42,8 @@ export class ProductsController {
 
     const game = typeof product.game === 'string' ? JSON.parse(product.game) : product.game;
     product.game = game;
-    
-    product.spoofer = (product.spoofer as any) === "true";
+
+    product.spoofer = (product.spoofer as any) === 'true';
 
     const convertToBase64 = (file: Express.Multer.File) => {
       return file.buffer.toString('base64');
@@ -63,17 +63,20 @@ export class ProductsController {
 
   @Get()
   async findAll() {
-    return await this.productsService.findAll();
+    const products = await this.productsService.findAll();
+    return products.filter((product) => !product.hidden);
   }
 
   @Get('/no-img')
   async findAllNoImg() {
-    return await this.productsService.findAllNoImg();
+    const products = await this.productsService.findAllNoImg();
+    return products.filter((product) => !product.hidden);
   }
 
   @Get('/no-thumbnail-and-img')
   async findAllNoThumbnailAndImg() {
-    return await this.productsService.findAllNoThumbnailAndImg();
+    const products = await this.productsService.findAllNoThumbnailAndImg();
+    return products.filter((product) => !product.hidden);
   }
 
   @Get('/:id')
@@ -103,14 +106,14 @@ export class ProductsController {
     @Param('id') id: string,
     @Body() product: Omit<Product, 'thumbnail' | 'images'>,
   ) {
-    console.log('yeah!!');
     const prices = typeof product.prices === 'string' ? JSON.parse(product.prices) : product.prices;
     product.prices = prices;
 
     const game = typeof product.game === 'string' ? JSON.parse(product.game) : product.game;
     product.game = game;
 
-    product.spoofer = (product.spoofer as any) === "true";
+    product.spoofer = (product.spoofer as any) === 'true';
+    product.hidden = (product.hidden as any) === 'true';
 
     const convertToBase64 = (file: Express.Multer.File) => {
       return file.buffer.toString('base64');

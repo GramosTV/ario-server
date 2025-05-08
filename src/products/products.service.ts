@@ -26,9 +26,7 @@ export class ProductsService {
 
   private async compressImage(base64Image: string): Promise<string> {
     const buffer = Buffer.from(base64Image, 'base64');
-    const compressedBuffer = await sharp(buffer) // example resize, adjust as needed
-      .jpeg({ quality: 75 }) // example compression, adjust as needed
-      .toBuffer();
+    const compressedBuffer = await sharp(buffer).jpeg({ quality: 75 }).toBuffer();
     return compressedBuffer.toString('base64');
   }
 

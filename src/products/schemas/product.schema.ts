@@ -1,4 +1,4 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'; 
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { Game, GameSchema } from 'src/games/schemas/game.schema';
 import { Status, Timeframe } from 'src/types';
@@ -66,6 +66,9 @@ export class Product extends Document {
 
   @Prop({ required: true })
   spoofer: boolean;
+
+  @Prop({ default: false })
+  hidden?: boolean;
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);
