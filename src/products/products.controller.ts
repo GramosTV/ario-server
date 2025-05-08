@@ -67,6 +67,12 @@ export class ProductsController {
     return products.filter((product) => !product.hidden);
   }
 
+  @Get('/all')
+  async findAlll() {
+    const products = await this.productsService.findAll();
+    return products.filter((product) => !product.hidden);
+  }
+
   @Get('/no-img')
   async findAllNoImg() {
     const products = await this.productsService.findAllNoImg();
